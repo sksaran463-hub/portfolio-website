@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saran SK | Frontend Developer | AIML Developer</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS Reset & Variables */
+        :root {
+            --primary: #3a86ff;
+            --secondary: #8338ec;
+            --dark-bg: #0f172a;
+            --text-light: #f8f9fa;
+            --text-gray: #94a3b8;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --font-main: 'Outfit', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            background-image:
+                radial-gradient(at 0% 0%, rgba(58, 134, 255, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(131, 56, 236, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(58, 134, 255, 0.15) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(131, 56, 236, 0.15) 0px, transparent 50%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Utility Classes */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            padding: 80px 0;
+        }
+
+        .flex-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #3a86ff, #8338ec, #ff006e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 200% 200%;
+            animation: gradient-flow 5s ease infinite;
+        }
+
+        /* Animations */
+        @keyframes gradient-flow {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 15px 0;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text-light);
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            padding: 20px;
+            border-bottom: 1px solid var(--glass-border);
+            text-align: center;
+        }
+
+        .mobile-menu a {
+            display: block;
+            padding: 10px 0;
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Hero Section */
+        #hero {
+            padding-top: 120px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-layout {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: column-reverse;
+            /* Default for mobile */
+            gap: 50px;
+        }
+
+        .hero-text {
+            flex: 1;
+            text-align: center;
+            /* Default for mobile */
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #93c5fd;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            line-height: 1.1;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-gray);
+            font-weight: 300;
+            margin-bottom: 25px;
+        }
+
+        .hero-desc {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+            margin-bottom: 35px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(58, 134, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(58, 134, 255, 0.4);
+        }
+
+        .btn-glass {
+            background: var(--glass-bg);
+            color: white;
+            border: 1px solid var(--glass-border);
+        }
+
+        .btn-glass:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-image-wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        .image-container {
+            width: 280px;
+            height: 280px;
+            position: relative;
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-glow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top right, var(--primary), var(--secondary));
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.4;
+            animation: pulse 4s infinite;
+        }
+
+        .floating-card {
+            position: absolute;
+            bottom: -20px;
+            right: 0;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            padding: 15px 25px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 20;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation-delay: 1s;
+        }
+
+        /* Projects Section */
+        .section-header {
+            text-center: center;
+            margin-bottom: 60px;
+        }
+
+        .section-label {
+            color: var(--primary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 10px 0 20px;
+        }
+
+        .underline {
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            margin: 0 auto;
+            border-radius: 2px;
+        }
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            background: transparent;
+            color: var(--text-gray);
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active {
+            background: var(--glass-bg);
+            color: #93c5fd;
+            border-color: var(--glass-border);
+        }
+
+        .filter-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-light);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .card-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .card:hover .card-image img {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-light);
+        }
+
+        .card-desc {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            flex: 1;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .tag-blue {
+            background: rgba(59, 130, 246, 0.2);
+            color: #93c5fd;
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .tag-purple {
+            background: rgba(168, 85, 247, 0.2);
+            color: #d8b4fe;
+            border-color: rgba(168, 85, 247, 0.3);
+        }
+
+        .tag-yellow {
+            background: rgba(234, 179, 8, 0.2);
+            color: #fde047;
+            border-color: rgba(234, 179, 8, 0.3);
+        }
+
+        .tag-green {
+            background: rgba(34, 197, 94, 0.2);
+            color: #86efac;
+            border-color: rgba(34, 197, 94, 0.3);
+        }
+
+        .tag-red {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .card-link {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: gap 0.3s;
+        }
+
+        .card-link:hover {
+            gap: 10px;
+            color: #60a5fa;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .skill-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .skill-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .skill-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px;
+            border-radius: 12px;
+            object-fit: contain;
+        }
+
+        .skill-name {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-light);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 3px;
+        }
+
+        /* About Section */
+        .about-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-image {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .about-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .experience-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .exp-card {
+            background: var(--glass-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+        }
+
+        /* Contact Section */
+        .contact-form {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            color: white;
+            font-family: var(--font-main);
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 50px 0;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--glass-border);
+            margin-top: 50px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            color: var(--text-gray);
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: white;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.4;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.6;
+                transform: scale(1.05);
+            }
+        }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            .hero-layout {
+                flex-direction: row;
+                text-align: left;
+            }
+
+            .hero-text {
+                text-align: left;
+                margin-left: 0;
+            }
+
+            .hero-desc {
+                margin-left: 0;
+            }
+
+            .hero-buttons {
+                justify-content: flex-start;
+            }
+
+            .image-container {
+                width: 350px;
+                height: 350px;
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .about-layout {
+                flex-direction: row;
+            }
+
+            .experience-grid,
+            .form-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .mobile-menu-btn {
+                display: none;
+            }
+
+            .nav-links {
+                display: flex;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .skills-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">Saran <span>.SK</span></a>
+
+            <div class="nav-links">
+                <a href="#home">HOME</a>
+                <a href="#projects">PROJECTS</a>
+                <a href="#skills">SKILLS</a>
+                <a href="#about">ABOUT</a>
+                <a href="#contact">CONTACT</a>
+            </div>
+
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <div class="mobile-menu" id="mobile-menu">
+            <a href="#home">Home</a>
+            <a href="#projects">Projects</a>
+            <a href="#skills">Skills</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home">
+        <div class="container hero-layout">
+            <div class="hero-text">
+                <div class="badge">WELCOME TO MY PORTFOLIO</div>
+                <h1 class="hero-title">
+                    Hi, I'm <br>
+                    <span class="gradient-text">SARAN SK</span>
+                </h1>
+                <h2 class="hero-subtitle">Frontend Developer | AIML Developer</h2>
+                <p class="hero-desc">
+                    I build responsive frontend interfaces and work on AIML projects using Python and Machine Learning.
+                    I enjoy connecting intelligent models with simple and user-friendly web applications.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary">View Projects</a>
+                    <a href="#contact" class="btn btn-glass">Contact Me</a>
+                </div>
+            </div>
+
+            <div class="hero-image-wrapper">
+                <div class="image-container">
+                    <div class="hero-glow"></div>
+                    <img src="assets/saran s photo.jpeg"
+                        onerror="this.src='https://placehold.co/400x400/1e293b/white?text=Saran'" alt="Saran SK"
+                        class="profile-img floating">
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">MY WORK</div>
+                <h2 class="section-title">Featured Projects</h2>
+                <div class="underline"></div>
+            </div>
+
+            <div class="filters">
+                <button class="filter-btn active">All Projects</button>
+                <button class="filter-btn">Frontend</button>
+                <button class="filter-btn">AI / ML</button>
+            </div>
+
+            <div class="grid">
+                <!-- 1. Portfolio Website -->
+                <div class="card">
+                    <div class="card-image">
+                        <img src="https://placehold.co/600x400/29304a/white?text=Portfolio+Website"
+                            alt="Portfolio Website">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Portfolio Website</h3>
+                        <p class="card-desc">
+                            A responsive personal portfolio website featuring glassmorphism design, smooth animations,
+                            and mobile responsiveness.
+                        </p>
+                        <div class="tags">
+                            <span class="tag tag-blue">HTML5</span>
+                            <span class="tag tag-blue">CSS3</span>
+                            <span class="tag tag-yellow">JavaScript</span>
+                        </div>
+                        <a href="https://github.com/sksaran463-hub/portfolio-website" target="_blank" class="card-link">
+                            View Github Repo
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 2. Music Streaming Web App -->
+                <div class="card">
+                    <div class="card-image">
+                        <img src="https://placehold.co/600x400/29304a/white?text=Music+App" alt="Music Streaming App">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Music Streaming Web App</h3>
+                        <p class="card-desc">
+                            A dynamic music player web application with playlist management, playback controls, and a
+                            modern interface.
+                        </p>
+                        <div class="tags">
+                            <span class="tag tag-blue">React</span>
+                            <span class="tag tag-purple">API</span>
+                            <span class="tag tag-red">CSS3</span>
+                        </div>
+                        <a href="#" target="_blank" class="card-link">
+                            View Github Repo
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 3. Habit Tracker Web App -->
+                <div class="card">
+                    <div class="card-image">
+                        <img src="https://placehold.co/600x400/29304a/white?text=Habit+Tracker" alt="Habit Tracker">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Habit Tracker Web App</h3>
+                        <p class="card-desc">
+                            A productivity tool to track daily habits and progress with visual statistics and local
+                            storage persistence.
+                        </p>
+                        <div class="tags">
+                            <span class="tag tag-yellow">JavaScript</span>
+                            <span class="tag tag-green">DOM</span>
+                        </div>
+                        <a href="https://github.com/sksaran463-hub/habit-tracker-web-app" target="_blank"
+                            class="card-link">
+                            View Github Repo
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 4. Plant Disease Detection -->
+                <div class="card">
+                    <div class="card-image">
+                        <img src="https://placehold.co/600x400/29304a/white?text=Plant+Disease+AI"
+                            alt="Plant Disease Detection">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Plant Disease Detection</h3>
+                        <p class="card-desc">
+                            An AI model that identifies different types of plant diseases from leaf images using deep
+                            learning (CNN).
+                        </p>
+                        <div class="tags">
+                            <span class="tag tag-red">TensorFlow</span>
+                            <span class="tag tag-blue">Python</span>
+                            <span class="tag tag-green">CNN</span>
+                        </div>
+                        <a href="https://github.com/sksaran463-hub/plant-disease-detection" target="_blank"
+                            class="card-link">
+                            View Github Repo
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 5. Fruit Ripeness Detection -->
+                <div class="card">
+                    <div class="card-image">
+                        <img src="https://placehold.co/600x400/29304a/white?text=Fruit+Rlpeness"
+                            alt="Fruit Ripeness Detection">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Fruit Ripeness Detection</h3>
+                        <p class="card-desc">
+                            A computer vision system that analyzes the color and texture of fruits to determine their
+                            ripeness stage.
+                        </p>
+                        <div class="tags">
+                            <span class="tag tag-purple">OpenCV</span>
+                            <span class="tag tag-blue">Python</span>
+                            <span class="tag tag-yellow">Processing</span>
+                        </div>
+                        <a href="https://github.com/sksaran463-hub/Fruit-ripeness-detection" target="_blank"
+                            class="card-link">
+                            View Github Repo
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 6. Vehicle Number Plate Detection -->
+                <div class="card">
+                    <div class="card-image">
+                        <img src="https://placehold.co/600x400/29304a/white?text=Plate+Detection"
+                            alt="Vehicle Number Plate Detection">
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Vehicle Plate Detection</h3>
+                        <p class="card-desc">
+                            An automated number plate recognition (ANPR) system used for vehicle identification and
+                            tracking.
+                        </p>
+                        <div class="tags">
+                            <span class="tag tag-red">YOLO</span>
+                            <span class="tag tag-blue">Python</span>
+                            <span class="tag tag-green">OCR</span>
+                        </div>
+                        <a href="https://github.com/sksaran463-hub/vehicle-number-plate-detection" target="_blank"
+                            class="card-link">
+                            View Github Repo
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center" style="margin-top: 50px;">
+                <a href="#" class="btn btn-glass">View All Repositories</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">EXPERTISE</div>
+                <h2 class="section-title">My Skills</h2>
+                <div class="underline"></div>
+            </div>
+
+            <div class="skills-grid">
+                <!-- JS -->
+                <div class="skill-card">
+                    <img src="assets/js.png" onerror="this.src='https://placehold.co/100x100?text=JS'" alt="JS"
+                        class="skill-icon">
+                    <div class="skill-name">JavaScript</div>
+
+                </div>
+                <!-- Python -->
+                <div class="skill-card">
+                    <img src="assets/python.webp" onerror="this.src='https://placehold.co/100x100?text=PY'" alt="Python"
+                        class="skill-icon">
+                    <div class="skill-name">Python</div>
+
+                </div>
+                <!-- C++ -->
+                <div class="skill-card">
+                    <img src="assets/c.png" onerror="this.src='https://placehold.co/100x100?text=C'" alt="C++"
+                        class="skill-icon">
+                    <div class="skill-name">C / C++</div>
+
+                </div>
+                <!-- ML -->
+                <div class="skill-card">
+                    <img src="assets/ml.jpg" onerror="this.src='https://placehold.co/100x100?text=ML'" alt="ML"
+                        class="skill-icon">
+                    <div class="skill-name">Machine Learning</div>
+
+                </div>
+                <!-- Excel -->
+                <div class="skill-card">
+                    <img src="assets/excel.png" onerror="this.src='https://placehold.co/100x100?text=XLS'" alt="Excel"
+                        class="skill-icon">
+                    <div class="skill-name">Excel</div>
+
+                </div>
+                <!-- HTML -->
+                <div class="skill-card">
+                    <img src="https://placehold.co/100x100?text=HTML" alt="HTML" class="skill-icon">
+                    <div class="skill-name">HTML</div>
+
+                </div>
+                <!-- CSS -->
+                <div class="skill-card">
+                    <img src="https://placehold.co/100x100?text=CSS" alt="CSS" class="skill-icon">
+                    <div class="skill-name">CSS</div>
+
+                </div>
+                <!-- Git -->
+                <div class="skill-card">
+                    <img src="https://placehold.co/100x100?text=Git" alt="Git" class="skill-icon">
+                    <div class="skill-name">Git</div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container about-layout">
+            <div>
+                <img src="assets/saran s photo.jpeg"
+                    onerror="this.src='https://placehold.co/400x500/1e293b/white?text=About+Me'" alt="About Me"
+                    class="about-image">
+            </div>
+            <div class="about-content">
+                <div class="section-label">ABOUT DEVELOPER</div>
+                <h2>Passionate about <span style="color: var(--secondary);">Innovation</span></h2>
+                <div style="color: var(--text-gray); font-size: 1.1rem; margin-bottom: 30px;">
+                    <p style="margin-bottom: 20px;">
+                        Hi! I’m Saran, a B.Sc. Artificial Intelligence and Machine Learning student with a strong
+                        interest in Frontend Development and applied ML projects.
+                        I enjoy building responsive web interfaces and developing machine learning solutions using
+                        Python.
+                    </p>
+                    <p style="margin-bottom: 20px;">
+                        Through academic projects and internships, I have gained hands-on experience in frontend
+                        technologies and ML-based applications such as image classification and prediction systems.
+                        I focus on writing clean, understandable code and continuously improving my technical skills.
+                    </p>
+                    <p>
+                        I am currently seeking entry-level or internship opportunities where I can learn, grow, and
+                        contribute as a Frontend Developer with AIML exposure.
+                    </p>
+                </div>
+
+                <div class="experience-grid">
+                    <div class="exp-card">
+                        <h4 style="font-size: 1.2rem; margin-bottom: 5px;">Education</h4>
+                        <p style="color: var(--primary); font-weight: 500;">B.Sc. AI & ML</p>
+                        <p style="color: var(--text-gray); font-size: 0.9rem;">Dr N.G.P Arts & Science College</p>
+                    </div>
+                    <div class="exp-card" style="border-left-color: var(--secondary);">
+                        <h4 style="font-size: 1.2rem; margin-bottom: 5px;">Experience</h4>
+                        <ul style="color: var(--text-gray); font-size: 0.9rem; list-style: none;">
+                            <li>• KMCH (Intern)</li>
+                            <li>• Encapsulate IT (Intern)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">CONTACT</div>
+                <h2 class="section-title">Get In Touch</h2>
+                <div class="underline"></div>
+            </div>
+
+            <div class="contact-form">
+                <form>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-input">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" rows="5" class="form-textarea"
+                            placeholder="Tell me about your project..."></textarea>
+                    </div>
+                    <div class="text-center" style="margin-top: 30px;">
+                        <button type="button" class="btn btn-primary">Send Message</button>
+                    </div>
+                </form>
+            </div>
+
+            <footer class="footer">
+                <p>&copy; 2024 Saran SK. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#">LinkedIn</a>
+                    <a href="#">GitHub</a>
+                    <a href="#">Twitter</a>
+                </div>
+            </footer>
+        </div>
+    </section>
+
+    <script>
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        const links = document.querySelectorAll('.mobile-menu a');
+
+        btn.addEventListener('click', () => {
+            if (menu.style.display === 'block') {
+                menu.style.display = 'none';
+            } else {
+                menu.style.display = 'block';
+            }
+        });
+
+        // Close menu when clicking a link
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                menu.style.display = 'none';
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(15, 23, 42, 0.95)';
+                nav.style.boxShadow = '0 10px 30px -10px rgba(0,0,0,0.3)';
+            } else {
+                nav.style.background = 'rgba(15, 23, 42, 0.8)';
+                nav.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>
